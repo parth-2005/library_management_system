@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import {connectDB} from "./config/db.js"
 import book_route from "./routers/book_route.js"
+import user_route from "./routers/user_route.js"
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json())
 connectDB();
 
 app.use("/api/book", book_route);
+app.use("/api/user",user_route);
 
 app.listen(5001, () => console.log("app is live on port 5001"),
-console.log("http://localhost:5001/api/book/"));
+console.log("http://localhost:5001/api/"));
