@@ -1,6 +1,6 @@
 import Assignment_model from '../modules/assignment.js';
-import Book_model from '../modules/assignment.js'
-import User_model from '../modules/user';
+import Book_model from '../modules/book.js'
+
 
 
 export const AssignBook = async (req,res) => {
@@ -9,7 +9,7 @@ export const AssignBook = async (req,res) => {
     try {
         const book = await Book_model.findById(bookId);
         if(!book){
-            return res(404).json({error:"Book not found"});
+            return res.status(404).json({error:"Book not found"});
         }
         if(book.book_quantity <= 0){
             return res.status(400).json({error: "Book is out of Stock"});
@@ -44,7 +44,7 @@ export const GetUserAssignments = async(req,res) => {
         const assignments = await Assignment_model.find(
             {userId}
         ).populate('bookId')
-         .populate('userId', 'username','email')
+         .populate('userId', 'username email')
 
          res.status(200).json({assignments})
 
@@ -60,8 +60,8 @@ export const GetUserAssignments = async(req,res) => {
 export const GetAllAssignments = async( req ,res ) => {
     try {
         const assignments = await Assignment_model.find()
-        .populated('bookId')
-        .populated('userId', 'username','email')
+        .populate('bookId')
+        .populate('userId', 'username email')
         .sort({issuedDate: -1});
 
         res.status(200).json({assignments})

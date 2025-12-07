@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { react } from '@vitejs/plugin-react';
 
 const assignmentSchema = new mongoose.Schema({
     userId:{

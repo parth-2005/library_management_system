@@ -4,15 +4,16 @@ import cors from 'cors';
 import {connectDB} from "./config/db.js"
 import book_route from "./routers/book_route.js"
 import user_route from "./routers/user_route.js"
+import assignment_route from "./routers/assignment_route.js"
 
 
 const app = express();
 
 app.use(
     cors({
-        origin:"http://localhost:5173",
-        methods:["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization"]        
+        origin: ["http://localhost:5173", "*"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"]
     })
 );
 app.use(express.json())
