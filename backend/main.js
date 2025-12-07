@@ -21,6 +21,7 @@ connectDB();
 
 app.use("/api/book", book_route);
 app.use("/api/user",user_route);
+app.use("/api/assignment", assignment_route);
 
 app.listen(5001, () => console.log("app is live on port 5001"),
 console.log("http://localhost:5001/api/"));

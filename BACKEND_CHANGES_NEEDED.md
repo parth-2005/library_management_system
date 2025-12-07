@@ -197,12 +197,8 @@ app.use("/api/assignment", assignment_route);
    - Protected routes
 
 ### 2. **Enhanced Book Management**
-   - Book categories/genres
-   - ISBN tracking
    - Book images/cover photos
    - Book descriptions
-   - Publication date
-   - Publisher information
    - Book ratings and reviews
 
 ### 3. **Advanced Assignment Features**
@@ -217,111 +213,26 @@ app.use("/api/assignment", assignment_route);
    - User profiles with avatars
    - User activity history
    - User ratings/reputation
-   - Membership tiers
    - Account verification
 
 ### 5. **Search & Filtering**
-   - Advanced search with multiple filters
    - Full-text search
-   - Search by ISBN, category, etc.
-   - Sorting options (by date, popularity, etc.)
-   - Pagination for large datasets
 
 ### 6. **Reporting & Analytics**
-   - Dashboard with statistics
-   - Most popular books
-   - User borrowing patterns
-   - Revenue reports
-   - Overdue books report
-   - Export data to CSV/PDF
 
 ### 7. **Notifications System**
-   - Email notifications for:
+     - Email notifications for:
      - Book due reminders
      - Overdue warnings
      - New book arrivals
      - Reservation availability
-   - In-app notifications
-   - SMS notifications (optional)
+     - SMS notifications (optional)
 
 ### 8. **Payment Integration**
    - Online payment for rent/fines
    - Payment gateway integration (Stripe, Razorpay, etc.)
    - Payment history
    - Receipt generation
-
-### 9. **Data Validation & Error Handling**
-   - Input validation on backend
-   - Proper error messages
-   - Rate limiting
-   - Request validation middleware
-
-### 10. **Security Enhancements**
-   - CORS configuration
-   - Input sanitization
-   - SQL injection prevention (if using SQL)
-   - XSS protection
-   - CSRF tokens
-   - API rate limiting
-
-### 11. **Database Improvements**
-   - Indexes for frequently queried fields
-   - Database connection pooling
-   - Backup and recovery strategy
-   - Data archiving for old records
-
-### 12. **API Improvements**
-   - API versioning
-   - API documentation (Swagger/OpenAPI)
-   - Response pagination
-   - Filtering and sorting in API
-   - API caching for frequently accessed data
-
-### 13. **Testing**
-   - Unit tests
-   - Integration tests
-   - End-to-end tests
-   - API testing
-
-### 14. **Deployment & DevOps**
-   - Environment variables for configuration
-   - Docker containerization
-   - CI/CD pipeline
-   - Logging and monitoring
-   - Error tracking (Sentry, etc.)
-
-### 15. **Additional Features**
-   - Book recommendations based on user history
-   - Wishlist functionality
-   - Book reviews and ratings
-   - Social features (share books, reading lists)
-   - Multi-language support
-   - Dark mode
-   - Mobile responsive design (already done with Tailwind)
-   - Accessibility improvements (ARIA labels, keyboard navigation)
-
----
-
-## Priority Implementation Order
-
-1. **High Priority (Required for basic functionality)**
-   - Assignment model and endpoints (listed above)
-   - Authentication system
-   - Input validation
-
-2. **Medium Priority (Important for production)**
-   - Fine calculation for overdue books
-   - Email notifications
-   - Search improvements
-   - Error handling
-
-3. **Low Priority (Nice to have)**
-   - Advanced analytics
-   - Payment integration
-   - Social features
-   - Recommendations
-
----
 
 ## Notes
 
