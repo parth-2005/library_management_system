@@ -1,15 +1,19 @@
 import User_model from '../modules/user.js';
 import mongoose from 'mongoose';
+import { hashPassword } from '../utils/auth_utils.js';
 
 export const AddUser = async(req,res) => {
     const {username, email,phone_number,password} = req.body;
 
     try {
+        const passwordHash = await hashPassword(password);
         const user = await User_model.create({
             username,
             email,
             phone_number,
-            password
+            password: passwordHash,
+            createdByAdmin: true,
+            isActive: true,
         })
         res.status(201).json({user})
     } catch (error) {

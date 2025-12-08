@@ -4,7 +4,7 @@ import Book_model from '../modules/book.js'
 
 
 export const AssignBook = async (req,res) => {
-    const {userId, bookId, issuedDate, dueDate, rent} = req.body;
+    const {userId, bookId, daysAllowed, rent} = req.body;
 
     try {
         const book = await Book_model.findById(bookId);
@@ -14,13 +14,20 @@ export const AssignBook = async (req,res) => {
         if(book.book_quantity <= 0){
             return res.status(400).json({error: "Book is out of Stock"});
         }
+        const issuedDate = new Date();
+        const dueDate = new Date(issuedDate);
+        if (daysAllowed) {
+            dueDate.setDate(dueDate.getDate() + Number(daysAllowed));
+        }
 
         const assignment = await Assignment_model.create({
         userId, 
         bookId, 
-        issuedDate: new Date(),
+        issuedDate,
         dueDate, 
-        rent
+        daysAllowed,
+        rent,
+        returned: false
         });
 
 

@@ -5,13 +5,30 @@ import {
     GetAllAssignments,
     ReturnBook,
 } from '../controllers/assignment_controller.js'
+import { authRequired, requireAdmin } from '../middleware/auth_middleware.js';
 
 const router = express.Router();
 
-router.post('/assign', AssignBook);
-router.get('/user/:userId', GetUserAssignments);
-router.get('/all', GetAllAssignments);
-router.post('/return/:assignmentId', ReturnBook);
+// All assignment routes require authentication
+router.use(authRequired);
+
+// Admin only routes
+router.post('/assign', requireAdmin, AssignBook);
+router.get('/all', requireAdmin, GetAllAssignments);
+router.post('/return/:assignmentId', requireAdmin, ReturnBook);
+
+// User can view their own assignments (admin can view any)
+router.get('/user/:userId', (req, res, next) => {
+  const { user } = req;
+  const { userId } = req.params;
+  const requesterId = user?.userId ? String(user.userId) : null;
+
+  if (user?.role === 'admin' || requesterId === String(userId)) {
+    return GetUserAssignments(req, res, next);
+  }
+
+  return res.status(403).json({ message: 'Not allowed to view assignments' });
+});
 
 export default router;
 

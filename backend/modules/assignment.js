@@ -24,6 +24,18 @@ const assignmentSchema = new mongoose.Schema({
         type: Number,
         required: true,
     }
+    ,
+    daysAllowed: {
+        type: Number,
+        required: true,
+    },
+    returned: {
+        type: Boolean,
+        default: false,
+    },
+    returnDate: {
+        type: Date,
+    }
 });
 
 // the upper schema will automatically give the JSON like this:
