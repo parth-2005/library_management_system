@@ -1,47 +1,40 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { assignmentAPI, userAPI } from '../services/api';
+import { assignmentAPI } from '../services/api';
 
 const UserDashboard = () => {
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
-  const username = localStorage.getItem('username');
+  const storedUser = localStorage.getItem('user');
+  const role = localStorage.getItem('role');
+  const token = localStorage.getItem('token');
+  const username = storedUser ? JSON.parse(storedUser).username : null;
 
   useEffect(() => {
-    if (!username) {
+    if (!token || role !== 'user') {
       navigate('/');
       return;
     }
     fetchUserData();
-  }, [username, navigate]);
+  }, [token, role, navigate]);
 
   const fetchUserData = async () => {
     try {
       setLoading(true);
-      // First, get all users to find the current user by username
-      const users = await userAPI.getAllUsers();
-      const currentUser = users.find(u => u.username === username);
-      
+      const currentUser = storedUser ? JSON.parse(storedUser) : null;
+      setUser(currentUser);
+
       if (!currentUser) {
         toast.error('User not found');
+        navigate('/');
         return;
       }
-      
-      setUser(currentUser);
-      
-      // Get user's book assignments
-      // Note: This endpoint needs to be created in backend
-      try {
-        const userAssignments = await assignmentAPI.getUserAssignments(currentUser._id);
-        setAssignments(userAssignments);
-      } catch (error) {
-        console.error('Error fetching assignments:', error);
-        // For now, show empty state if endpoint doesn't exist
-        setAssignments([]);
-      }
+
+      const userAssignments = await assignmentAPI.getUserAssignments(currentUser.id || currentUser._id);
+      setAssignments(userAssignments);
     } catch (error) {
       console.error('Error fetching user data:', error);
       toast.error('Failed to load user data');
@@ -53,7 +46,8 @@ const UserDashboard = () => {
   const calculateDaysRemaining = (assignmentDate, daysAllowed) => {
     const issuedDate = new Date(assignmentDate);
     const dueDate = new Date(issuedDate);
-    dueDate.setDate(dueDate.getDate() + daysAllowed);
+    const days = Number.isFinite(daysAllowed) ? daysAllowed : 0;
+    dueDate.setDate(dueDate.getDate() + days);
     const today = new Date();
     const diffTime = dueDate - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -61,8 +55,9 @@ const UserDashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('userType');
-    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     navigate('/');
     toast.success('Logged out successfully');
   };
@@ -85,7 +80,7 @@ const UserDashboard = () => {
           <div className="flex justify-between items-center h-16">
             <h1 className="text-2xl font-bold text-gray-800">User Dashboard</h1>
             <div className="flex items-center gap-4">
-              <span className="text-gray-600">Welcome, {username}</span>
+              <span className="text-gray-600">Welcome, {user?.username || user?.email}</span>
               <button
                 onClick={handleLogout}
                 className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
@@ -162,10 +157,10 @@ const UserDashboard = () => {
                     return (
                       <tr key={assignment._id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                          {assignment.book?.book_title || 'N/A'}
+                          {assignment.bookId?.book_title || assignment.book?.book_title || 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {assignment.book?.book_author || 'N/A'}
+                          {assignment.bookId?.book_author || assignment.book?.book_author || 'N/A'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                           {new Date(assignment.issuedDate).toLocaleDateString()}

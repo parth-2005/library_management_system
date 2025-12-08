@@ -1,31 +1,48 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { authAPI } from '../services/api';
 
 const Login = () => {
   const [userType, setUserType] = useState('user'); // 'user' or 'admin'
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     
-    if (!username.trim()) {
-      toast.error('Please enter a username');
+    if (!email.trim() || !password.trim()) {
+      toast.error('Please enter email and password');
       return;
     }
 
-    // Store user info in localStorage (temporary, no auth)
-    localStorage.setItem('userType', userType);
-    localStorage.setItem('username', username);
-    
-    toast.success(`Logged in as ${userType}`);
-    toast.success(`Hello Username: ${username}`);
-    
-    if (userType === 'admin') {
-      navigate('/admin/dashboard');
-    } else {
-      navigate('/user/dashboard');
+    try {
+      setLoading(true);
+      const payload = { email, password };
+      const data = userType === 'admin'
+        ? await authAPI.adminLogin(payload)
+        : await authAPI.userLogin(payload);
+
+      const actor = data.admin || data.user;
+      const role = actor?.role || userType;
+
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('role', role);
+      localStorage.setItem('user', JSON.stringify(actor));
+
+      toast.success(`Logged in as ${userType}`);
+      
+      if (userType === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/user/dashboard');
+      }
+    } catch (error) {
+      toast.error(error.message || 'Login failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -37,6 +54,11 @@ const Login = () => {
         </h1>
         
         <form onSubmit={handleLogin} className="space-y-6">
+          {process.env.NODE_ENV === 'development' && (
+            <div className="text-xs text-gray-400 text-center">
+              Admin setup is available at <code>/admin/setup</code>
+            </div>
+          )}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Login As
@@ -68,24 +90,41 @@ const Login = () => {
           </div>
 
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-              Username
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              Email
             </label>
             <input
-              type="text"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-              placeholder="Enter your username"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              placeholder="Enter your password"
+              required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg disabled:opacity-60"
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
       </div>

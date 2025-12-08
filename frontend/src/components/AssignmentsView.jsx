@@ -12,19 +12,22 @@ const AssignmentsView = ({ assignments, users, books, onRefresh }) => {
   });
 
   const getUserName = (userId) => {
-    const user = users.find(u => u._id === userId);
-    return user ? user.username : 'Unknown';
+    const id = typeof userId === 'object' ? userId._id : userId;
+    const user = users.find(u => u._id === id);
+    return user ? user.username : userId?.username || 'Unknown';
   };
 
   const getBookTitle = (bookId) => {
-    const book = books.find(b => b._id === bookId);
-    return book ? book.book_title : 'Unknown';
+    const id = typeof bookId === 'object' ? bookId._id : bookId;
+    const book = books.find(b => b._id === id);
+    return book ? book.book_title : bookId?.book_title || 'Unknown';
   };
 
   const calculateDaysRemaining = (assignmentDate, daysAllowed) => {
     const issuedDate = new Date(assignmentDate);
     const dueDate = new Date(issuedDate);
-    dueDate.setDate(dueDate.getDate() + daysAllowed);
+    const days = Number.isFinite(daysAllowed) ? daysAllowed : 0;
+    dueDate.setDate(dueDate.getDate() + days);
     const today = new Date();
     const diffTime = dueDate - today;
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

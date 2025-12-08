@@ -18,15 +18,18 @@ const AdminDashboard = () => {
   const [editingBook, setEditingBook] = useState(null);
   const [selectedBook, setSelectedBook] = useState(null);
   const navigate = useNavigate();
-  const username = localStorage.getItem('username');
+  const storedUser = localStorage.getItem('user');
+  const admin = storedUser ? JSON.parse(storedUser) : null;
+  const role = localStorage.getItem('role');
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    if (!username) {
+    if (!token || role !== 'admin') {
       navigate('/');
       return;
     }
     fetchData();
-  }, [username, navigate]);
+  }, [token, role, navigate]);
 
   const fetchData = async () => {
     try {
@@ -34,7 +37,7 @@ const AdminDashboard = () => {
       const [booksData, usersData, assignmentsData] = await Promise.all([
         bookAPI.getAllBooks(),
         userAPI.getAllUsers(),
-        assignmentAPI.getAllAssignments().catch(() => []), // Handle if endpoint doesn't exist
+        assignmentAPI.getAllAssignments().catch(() => []),
       ]);
       setBooks(booksData);
       setUsers(usersData);
@@ -109,8 +112,9 @@ const AdminDashboard = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('userType');
-    localStorage.removeItem('username');
+    localStorage.removeItem('role');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     navigate('/');
     toast.success('Logged out successfully');
   };
@@ -137,7 +141,7 @@ const AdminDashboard = () => {
           <div className="flex justify-between items-center h-16">
             <h1 className="text-2xl font-bold text-gray-800">Admin Dashboard</h1>
             <div className="flex items-center gap-4">
-              <span className="text-gray-600">Welcome, {username}</span>
+              <span className="text-gray-600">Welcome, {admin?.adminName || admin?.email}</span>
               <button
                 onClick={handleLogout}
                 className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
