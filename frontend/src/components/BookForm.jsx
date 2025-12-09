@@ -39,17 +39,18 @@ const BookForm = ({ book, onSubmit, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-800">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white/90 backdrop-blur rounded-2xl shadow-2xl w-full max-w-md border border-amber-100">
+        <div className="px-6 py-4 border-b border-amber-100">
+          <p className="text-xs uppercase tracking-[0.2em] text-amber-600 font-semibold">Books</p>
+          <h2 className="text-xl font-semibold text-gray-900">
             {book ? 'Edit Book' : 'Add New Book'}
           </h2>
         </div>
 
         <form onSubmit={handleSubmit} className="px-6 py-4 space-y-4">
           <div>
-            <label htmlFor="book_title" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="book_title" className="block text-sm font-semibold text-gray-700 mb-1">
               Book Title *
             </label>
             <input
@@ -59,12 +60,12 @@ const BookForm = ({ book, onSubmit, onClose }) => {
               value={formData.book_title}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-3 border border-amber-100 rounded-xl focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none shadow-sm"
             />
           </div>
 
           <div>
-            <label htmlFor="book_author" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="book_author" className="block text-sm font-semibold text-gray-700 mb-1">
               Author *
             </label>
             <input
@@ -74,12 +75,12 @@ const BookForm = ({ book, onSubmit, onClose }) => {
               value={formData.book_author}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-3 border border-amber-100 rounded-xl focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none shadow-sm"
             />
           </div>
 
           <div>
-            <label htmlFor="book_language" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="book_language" className="block text-sm font-semibold text-gray-700 mb-1">
               Language *
             </label>
             <input
@@ -89,12 +90,12 @@ const BookForm = ({ book, onSubmit, onClose }) => {
               value={formData.book_language}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-3 border border-amber-100 rounded-xl focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none shadow-sm"
             />
           </div>
 
           <div>
-            <label htmlFor="book_price" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="book_price" className="block text-sm font-semibold text-gray-700 mb-1">
               Price *
             </label>
             <input
@@ -104,12 +105,12 @@ const BookForm = ({ book, onSubmit, onClose }) => {
               value={formData.book_price}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-3 border border-amber-100 rounded-xl focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none shadow-sm"
             />
           </div>
 
           <div>
-            <label htmlFor="book_quantity" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="book_quantity" className="block text-sm font-semibold text-gray-700 mb-1">
               Quantity *
             </label>
             <input
@@ -120,21 +121,21 @@ const BookForm = ({ book, onSubmit, onClose }) => {
               onChange={handleChange}
               required
               min="0"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-3 border border-amber-100 rounded-xl focus:ring-2 focus:ring-amber-400 focus:border-transparent outline-none shadow-sm"
             />
           </div>
 
           <div className="flex gap-3 pt-4">
             <button
               type="submit"
-              className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              className="flex-1 bg-gradient-to-r from-amber-500 to-rose-500 text-white py-3 rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition font-semibold"
             >
               {book ? 'Update' : 'Add'} Book
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+              className="flex-1 bg-white text-gray-700 border border-amber-100 py-3 rounded-xl hover:bg-amber-50 transition font-semibold"
             >
               Cancel
             </button>

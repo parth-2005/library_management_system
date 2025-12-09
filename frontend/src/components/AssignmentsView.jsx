@@ -49,37 +49,40 @@ const AssignmentsView = ({ assignments, users, books, onRefresh }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-      <div className="px-6 py-4 border-b border-gray-200">
+    <div className="bg-white/90 backdrop-blur rounded-2xl shadow-xl overflow-hidden mb-6 border border-amber-100">
+      <div className="px-6 py-4 border-b border-amber-100">
         <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold text-gray-800">Book Assignments</h2>
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-amber-600 font-semibold">Overview</p>
+            <h2 className="text-xl font-semibold text-gray-900">Book Assignments</h2>
+          </div>
           <div className="flex gap-2">
             <button
               onClick={() => setFilterStatus('all')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 filterStatus === 'all'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-md'
+                  : 'bg-amber-50 text-amber-700 border border-amber-100 hover:bg-amber-100'
               }`}
             >
               All
             </button>
             <button
               onClick={() => setFilterStatus('active')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 filterStatus === 'active'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md'
+                  : 'bg-emerald-50 text-emerald-700 border border-emerald-100 hover:bg-emerald-100'
               }`}
             >
               Active
             </button>
             <button
               onClick={() => setFilterStatus('returned')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 filterStatus === 'returned'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-md'
+                  : 'bg-indigo-50 text-indigo-700 border border-indigo-100 hover:bg-indigo-100'
               }`}
             >
               Returned
@@ -97,28 +100,28 @@ const AssignmentsView = ({ assignments, users, books, onRefresh }) => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   User
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Book
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Issued Date
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Days Allowed
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Days Remaining
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Rent
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -149,10 +152,10 @@ const AssignmentsView = ({ assignments, users, books, onRefresh }) => {
                       <span
                         className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                           isOverdue
-                            ? 'bg-red-100 text-red-800'
+                            ? 'bg-rose-100 text-rose-800'
                             : daysRemaining <= 3
-                            ? 'bg-yellow-100 text-yellow-800'
-                            : 'bg-green-100 text-green-800'
+                            ? 'bg-amber-100 text-amber-800'
+                            : 'bg-emerald-100 text-emerald-800'
                         }`}
                       >
                         {isOverdue
@@ -168,7 +171,7 @@ const AssignmentsView = ({ assignments, users, books, onRefresh }) => {
                         className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                           assignment.returned
                             ? 'bg-gray-100 text-gray-800'
-                            : 'bg-blue-100 text-blue-800'
+                            : 'bg-indigo-100 text-indigo-800'
                         }`}
                       >
                         {assignment.returned ? 'Returned' : 'Active'}
@@ -178,7 +181,7 @@ const AssignmentsView = ({ assignments, users, books, onRefresh }) => {
                       {!assignment.returned && (
                         <button
                           onClick={() => handleReturnBook(assignment._id)}
-                          className="text-green-600 hover:text-green-900 font-medium"
+                          className="text-emerald-600 hover:text-emerald-800 font-semibold transition"
                         >
                           Mark Returned
                         </button>

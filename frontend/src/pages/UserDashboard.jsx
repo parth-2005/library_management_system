@@ -74,16 +74,27 @@ const UserDashboard = () => {
   const totalBooks = assignments.length;
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage:
+          'linear-gradient(rgba(10,15,35,0.78), rgba(10,15,35,0.78)), url("https://images.unsplash.com/photo-1460518451285-97b6aa326961?auto=format&fit=crop&w=1600&q=80")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <nav className="bg-white/85 backdrop-blur shadow-sm border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <h1 className="text-2xl font-bold text-gray-800">User Dashboard</h1>
+            <div>
+              <p className="text-xs uppercase tracking-[0.2em] text-sky-600 font-semibold">Library</p>
+              <h1 className="text-2xl font-bold text-slate-900">User Dashboard</h1>
+            </div>
             <div className="flex items-center gap-4">
-              <span className="text-gray-600">Welcome, {user?.username || user?.email}</span>
+              <span className="text-slate-700">Welcome, {user?.username || user?.email}</span>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:shadow-md hover:-translate-y-0.5 transition"
               >
                 Logout
               </button>
@@ -95,15 +106,15 @@ const UserDashboard = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-white/90 backdrop-blur p-6 rounded-2xl shadow-lg border border-slate-200">
             <h3 className="text-sm font-medium text-gray-500 mb-2">Total Books</h3>
             <p className="text-3xl font-bold text-blue-600">{totalBooks}</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-white/90 backdrop-blur p-6 rounded-2xl shadow-lg border border-slate-200">
             <h3 className="text-sm font-medium text-gray-500 mb-2">Total Rent</h3>
             <p className="text-3xl font-bold text-green-600">₹{totalRent}</p>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-md">
+          <div className="bg-white/90 backdrop-blur p-6 rounded-2xl shadow-lg border border-slate-200">
             <h3 className="text-sm font-medium text-gray-500 mb-2">Active Books</h3>
             <p className="text-3xl font-bold text-purple-600">
               {assignments.filter(a => !a.returned).length}
@@ -112,8 +123,8 @@ const UserDashboard = () => {
         </div>
 
         {/* Books List */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
+        <div className="bg-white/90 backdrop-blur rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+          <div className="px-6 py-4 border-b border-slate-200">
             <h2 className="text-xl font-semibold text-gray-800">My Books</h2>
           </div>
           
@@ -126,22 +137,22 @@ const UserDashboard = () => {
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Book Title
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Author
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Issued Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Days Remaining
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Rent
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Status
                     </th>
                   </tr>

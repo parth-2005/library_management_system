@@ -18,8 +18,14 @@ export const authRequired = async (req, res, next) => {
 
   const token = headerValue.slice(7);
 
+
+// Verify the token with JWT
   try {
     const payload = jwt.verify(token, JWT_SECRET);
+    // Checks if the token:
+    //    Was signed using your secret (JWT_SECRET)
+    //    Is not expired
+    //    Has not been tampered with
     req.user = payload;
     return next();
   } catch (error) {

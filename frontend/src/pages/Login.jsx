@@ -47,11 +47,28 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-8 text-gray-800">
+    <div
+      className="min-h-screen flex items-center justify-center relative"
+      style={{
+        backgroundImage:
+          'linear-gradient(rgba(8,15,40,0.70), rgba(8,15,40,0.70)), url("https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1600&q=80")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_40%)]" />
+      <div className="relative bg-white/90 backdrop-blur p-8 rounded-3xl shadow-2xl w-full max-w-md border border-slate-200">
+        <div className="flex items-center justify-center mb-2">
+          <div className="h-12 w-12 rounded-2xl bg-sky-600 flex items-center justify-center text-white font-bold shadow-lg">
+            LMS
+          </div>
+        </div>
+        <h1 className="text-3xl font-bold text-center mb-2 text-slate-900">
           Library Management System
         </h1>
+        <p className="text-center text-sm text-slate-500 mb-6">
+          Borrow smarter. Manage seamlessly.
+        </p>
         
         <form onSubmit={handleLogin} className="space-y-6">
           {process.env.NODE_ENV === 'development' && (
@@ -67,10 +84,10 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => setUserType('user')}
-                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
+                className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all ${
                   userType === 'user'
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-sky-600 text-white shadow-lg shadow-sky-200'
+                    : 'bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200'
                 }`}
               >
                 User
@@ -78,10 +95,10 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => setUserType('admin')}
-                className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${
+                className={`flex-1 py-3 px-4 rounded-xl font-semibold transition-all ${
                   userType === 'admin'
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-amber-500 text-white shadow-lg shadow-amber-200'
+                    : 'bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200'
                 }`}
               >
                 Admin
@@ -98,7 +115,7 @@ const Login = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all shadow-sm"
               placeholder="Enter your email"
               required
             />
@@ -113,7 +130,7 @@ const Login = () => {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+              className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all shadow-sm"
               placeholder="Enter your password"
               required
             />
@@ -122,7 +139,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg disabled:opacity-60"
+            className="w-full bg-sky-600 text-white py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition disabled:opacity-60"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>

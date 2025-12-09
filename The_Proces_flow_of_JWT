@@ -1,0 +1,47 @@
+first we will create 3 functions in the utils/auth_utils.js:
+    1) hashPassword() = It will receive the plainPassword as an argument and then it will hash it using the bcrypt.hash(plainPassword, saltnumber) method.
+
+    2) comparePassword() = It will receive the plainPassword and the hashPassword as arguments and then by the method of bcrypt.compare it will compare both the plain password and the hashed password
+
+    3) generateToken() = is a utility function that creates a JWT (JSON Web Token) for a user after they log in or sign up.It will identify the user on future requests,avoids repeated logins by sending the token with each request. here the jwt.sign method will create the token of the payload we provide(here it is userId and the role)
+
+admin_auth_controller  it will contain the 2 function:
+    1) adminSignUP which will take the plainpassword from the req.body and then it will hash it using the hashPassword() we created.
+    also it will create the token using the generateToken() we have created taking the admin._id created by mongodb and the role provided!
+
+    2) adminSignIn it will take the email and the password from the user then the password will be compared with the hashed password using the comparePassword function we created! It will also generate the token so as to not login again after refresh is done ! if the token is stored in the localStorage via the frontend!
+
+that's it the other 2 controllers are for the specific usecase of them in this project!
+
+auth_middleware.js: This is the middleware that has 2 functions:
+    authRequired() = it will see that whether the user is logged in or not also do they have a valid token or not!
+
+    On the frontend, when you call your API, you typically send the token like this:
+        Authorization: Bearer YOUR_JWT_TOKEN_HERE
+        In Express, that header is found at req.headers.authorization
+        then the middleware checks it, if the header is not a string then it is rejected(401)
+
+        then the header values is checked that whether it's starts with the bearer or not ! if not then again No token provided
+
+        then the verification with the JWT is done if everyhting stated up is true.
+
+        const payload = jwt.verify(token, JWT_SECRET);
+        // Checks if the token:
+        //    Was signed using your secret (JWT_SECRET)
+        //    Is not expired
+        //    Has not been tampered with
+
+        If verification succeeds:
+            payload will contain whatever you put in the token when you created it, e.g.:
+            {
+            "id": "672b8a.....",
+            "role": "admin",
+            }
+
+
+
+    requireAdmin() = it will see that the user is logged in but is the user an Admin or not?
+    This middleware assumes authRequired already ran and set req.user
+
+
+then there is routing simple post requests for the signUp and and the signin functions from the controllers

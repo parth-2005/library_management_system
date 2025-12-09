@@ -20,6 +20,7 @@ export const comparePassword = async(plainPassword, hashPassword) => {
 }
 
 export const generateToken = ({ id, role }) => {
+  // jwt.sign() creates the JWT token.
   return jwt.sign(
     {
       userId: id,
