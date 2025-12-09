@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 import { authAPI } from '../services/api';
 
 const Login = () => {
@@ -57,7 +58,12 @@ const Login = () => {
       }}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.12),_transparent_40%)]" />
-      <div className="relative bg-white/90 backdrop-blur p-8 rounded-3xl shadow-2xl w-full max-w-md border border-slate-200">
+      <motion.div
+        initial={{ opacity: 0, y: 24, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="relative bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_24px_80px_-40px_rgba(0,0,0,0.65)] w-full max-w-md border border-white/30"
+      >
         <div className="flex items-center justify-center mb-2">
           <div className="h-12 w-12 rounded-2xl bg-sky-600 flex items-center justify-center text-white font-bold shadow-lg">
             LMS
@@ -144,7 +150,7 @@ const Login = () => {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

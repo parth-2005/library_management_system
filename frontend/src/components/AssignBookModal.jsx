@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 import { userAPI } from '../services/api';
 
 const AssignBookModal = ({ book, users, onSubmit, onClose, onUserCreated }) => {
@@ -83,9 +84,14 @@ const AssignBookModal = ({ book, users, onSubmit, onClose, onUserCreated }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/55 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white/95 backdrop-blur rounded-2xl shadow-2xl w-full max-w-xl border border-slate-200">
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+    <div className="fixed inset-0 bg-black/65 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 24, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
+        className="bg-white/85 backdrop-blur-xl rounded-2xl shadow-[0_24px_80px_-40px_rgba(0,0,0,0.65)] w-full max-w-xl border border-white/30"
+      >
+        <div className="px-6 py-4 border-b border-white/35 flex items-center justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-sky-600 font-semibold">Assign</p>
             <h2 className="text-2xl font-bold text-slate-900">Assign Book</h2>
@@ -234,7 +240,7 @@ const AssignBookModal = ({ book, users, onSubmit, onClose, onUserCreated }) => {
             )}
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 const API_BASE_URL ='http://localhost:5001/api';
-
 const getAuthHeaders = (isJson = true) => {
   const token = localStorage.getItem('token');
   const headers = {};

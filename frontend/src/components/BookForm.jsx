@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const BookForm = ({ book, onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
@@ -39,9 +40,14 @@ const BookForm = ({ book, onSubmit, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white/90 backdrop-blur rounded-2xl shadow-2xl w-full max-w-md border border-amber-100">
-        <div className="px-6 py-4 border-b border-amber-100">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 28, scale: 0.97 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.35, ease: 'easeOut' }}
+        className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_24px_80px_-40px_rgba(0,0,0,0.65)] w-full max-w-md border border-white/30"
+      >
+        <div className="px-6 py-4 border-b border-white/40">
           <p className="text-xs uppercase tracking-[0.2em] text-amber-600 font-semibold">Books</p>
           <h2 className="text-xl font-semibold text-gray-900">
             {book ? 'Edit Book' : 'Add New Book'}
@@ -141,7 +147,7 @@ const BookForm = ({ book, onSubmit, onClose }) => {
             </button>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

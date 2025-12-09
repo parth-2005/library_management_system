@@ -134,6 +134,10 @@ const AdminDashboard = () => {
       book.book_language?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const totalBooks = books.length;
+  const totalAssignments = assignments.length;
+  const totalUsers = users.length;
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -147,12 +151,12 @@ const AdminDashboard = () => {
       className="min-h-screen"
       style={{
         backgroundImage:
-          'linear-gradient(rgba(10,15,35,0.78), rgba(10,15,35,0.78)), url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1600&q=80")',
+          'linear-gradient(120deg, rgba(14,18,34,0.8), rgba(18,24,42,0.78)), url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1600&q=80")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <nav className="bg-white/85 backdrop-blur shadow-sm border-b border-slate-200">
+      <nav className="bg-white/70 backdrop-blur-xl shadow-sm border-b border-white/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div>
@@ -163,7 +167,7 @@ const AdminDashboard = () => {
               <span className="text-slate-700">Welcome, {admin?.adminName || admin?.email}</span>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-sky-600 text-white rounded-lg hover:shadow-md hover:-translate-y-0.5 transition"
+                className="px-4 py-2 bg-slate-900 text-white rounded-lg hover:shadow-md hover:-translate-y-0.5 transition border border-white/30 backdrop-blur"
               >
                 Logout
               </button>
@@ -172,38 +176,54 @@ const AdminDashboard = () => {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-4 mb-6">
-          <button
-            onClick={handleAddBook}
-            className="px-6 py-3 bg-sky-600 text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition font-semibold shadow-sky-200"
-          >
-            Add New Book
-          </button>
-          <button
-            onClick={() => setShowAssignments(!showAssignments)}
-            className="px-6 py-3 bg-emerald-600 text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition font-semibold shadow-emerald-200"
-          >
-            {showAssignments ? 'Hide' : 'View'} All Assignments
-          </button>
-          <button
-            onClick={() => setShowUserForm(true)}
-            className="px-6 py-3 bg-amber-600 text-white rounded-xl hover:shadow-lg hover:-translate-y-0.5 transition font-semibold shadow-amber-200"
-          >
-            Create User
-          </button>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Action + Search */}
+        <div className="bg-white/75 border border-white/60 backdrop-blur-2xl rounded-3xl shadow-[0_24px_80px_-45px_rgba(0,0,0,0.55)] p-6 space-y-4">
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={handleAddBook}
+              className="px-5 py-3 bg-slate-900 text-white rounded-xl border border-slate-900/70 hover:bg-slate-800 transition font-semibold shadow-sm"
+            >
+              Add New Book
+            </button>
+            <button
+              onClick={() => setShowAssignments(!showAssignments)}
+              className="px-5 py-3 bg-slate-100 text-slate-900 rounded-xl border border-white/80 hover:bg-white transition font-semibold shadow-sm"
+            >
+              {showAssignments ? 'Hide' : 'View'} All Assignments
+            </button>
+            <button
+              onClick={() => setShowUserForm(true)}
+              className="px-5 py-3 bg-white text-slate-900 rounded-xl border border-white/80 hover:bg-slate-50 transition font-semibold shadow-sm"
+            >
+              Create User
+            </button>
+          </div>
 
-        {/* Search Bar */}
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search books by title, author, or language..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none shadow-sm bg-white/80"
-          />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white/90 border border-white/80 backdrop-blur-xl rounded-2xl px-4 py-3 text-slate-900 shadow-sm">
+              <p className="text-xs uppercase tracking-wide text-slate-500">Books</p>
+              <p className="text-2xl font-semibold">{totalBooks}</p>
+            </div>
+            <div className="bg-white/90 border border-white/80 backdrop-blur-xl rounded-2xl px-4 py-3 text-slate-900 shadow-sm">
+              <p className="text-xs uppercase tracking-wide text-slate-500">Assignments</p>
+              <p className="text-2xl font-semibold">{totalAssignments}</p>
+            </div>
+            <div className="bg-white/90 border border-white/80 backdrop-blur-xl rounded-2xl px-4 py-3 text-slate-900 shadow-sm">
+              <p className="text-xs uppercase tracking-wide text-slate-500">Users</p>
+              <p className="text-2xl font-semibold">{totalUsers}</p>
+            </div>
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Search books by title, author, or language..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-slate-300 focus:border-transparent outline-none shadow-sm bg-white/90 text-slate-900 placeholder:text-slate-400 backdrop-blur"
+            />
+          </div>
         </div>
 
         {/* Assignments View */}
@@ -214,12 +234,12 @@ const AdminDashboard = () => {
         )}
 
         {/* Books Table */}
-        <div className="bg-white/90 backdrop-blur rounded-2xl shadow-xl overflow-hidden border border-slate-200">
-          <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-gray-800">
+        <div className="bg-white/90 backdrop-blur-2xl rounded-3xl shadow-[0_24px_80px_-50px_rgba(0,0,0,0.6)] overflow-hidden border border-white/70">
+          <div className="px-6 py-4 border-b border-white/70 flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-slate-900">
               Books ({filteredBooks.length})
             </h2>
-            <div className="text-sm text-gray-500">Curated collection</div>
+            <div className="text-sm text-slate-600">Curated collection</div>
           </div>
 
           {filteredBooks.length === 0 ? (
@@ -231,7 +251,7 @@ const AdminDashboard = () => {
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50">
+                <thead className="bg-white/80 backdrop-blur">
                   <tr>
                     <th className="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                       Title
@@ -253,27 +273,27 @@ const AdminDashboard = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white backdrop-blur divide-y divide-slate-100">
                   {filteredBooks.map((book) => (
                     <tr key={book._id} className="hover:bg-slate-50 transition">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
                         {book.book_title}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                         {book.book_author}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                         {book.book_language}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
                         ₹{book.book_price}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
                         <span
                           className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full shadow-sm ${
                             book.book_quantity > 0
-                              ? 'bg-emerald-100 text-emerald-800'
-                              : 'bg-amber-100 text-amber-800'
+                              ? 'bg-emerald-50 text-emerald-700'
+                              : 'bg-amber-50 text-amber-700'
                           }`}
                         >
                           {book.book_quantity}
