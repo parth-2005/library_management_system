@@ -7,6 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET_KEY || 'change_this_secret';
 
 export const authRequired = async (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization || '';
+  console.log(authHeader)
   if (typeof authHeader !== 'string') {
     return res.status(401).json({ message: 'No token provided' });
   }

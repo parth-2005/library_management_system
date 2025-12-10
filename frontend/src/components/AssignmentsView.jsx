@@ -9,19 +9,29 @@ const AssignmentsView = ({ assignments, users, books, onRefresh }) => {
   const filteredAssignments = assignments.filter((assignment) => {
     if (filterStatus === 'active') return !assignment.returned;
     if (filterStatus === 'returned') return assignment.returned;
-    return true;
+    return true;  
   });
 
   const getUserName = (userId) => {
-    const id = typeof userId === 'object' ? userId._id : userId;
+    if(!userId) return 'Unknown';
+    const id = (typeof userId === 'object' && userId !== null) ? (userId._id ?? null) : userId;
+    if (!id) return (userId && typeof userId === 'object') ? (userId.username ?? 'Unknown') : 'Unknown';
+
+    if(!Array.isArray(users))
+      return 'Unknown';
+    
     const user = users.find(u => u._id === id);
-    return user ? user.username : userId?.username || 'Unknown';
+    return user?.username ?? (userId && typeof userId === 'object' ? userId.username ?? 'Unknown' : 'Unknown');
   };
 
   const getBookTitle = (bookId) => {
-    const id = typeof bookId === 'object' ? bookId._id : bookId;
-    const book = books.find(b => b._id === id);
-    return book ? book.book_title : bookId?.book_title || 'Unknown';
+   if (!bookId) return 'Unknown';
+  const id = (typeof bookId === 'object' && bookId !== null) ? (bookId._id ?? null) : bookId;
+  if (!id) return (bookId && typeof bookId === 'object') ? (bookId.book_title ?? 'Unknown') : 'Unknown';
+
+  if (!Array.isArray(books)) return 'Unknown';
+  const book = books.find(b => b._id === id);
+  return book?.book_title ?? (bookId && typeof bookId === 'object' ? bookId.book_title ?? 'Unknown' : 'Unknown');
   };
 
   const calculateDaysRemaining = (assignmentDate, daysAllowed) => {
