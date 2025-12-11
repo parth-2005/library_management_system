@@ -76,11 +76,6 @@ const Login = () => {
         </p>
         
         <form onSubmit={handleLogin} className="space-y-6">
-          {process.env.NODE_ENV === 'development' && (
-            <div className="text-xs text-gray-400 text-center">
-              Admin setup is available at <code>/admin/setup</code>
-            </div>
-          )}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Login As
