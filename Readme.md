@@ -1,4 +1,4 @@
-# Library Management Service
+# Library Management System
 
 A full-stack Library Management System built with React (frontend) and Node.js/Express/MongoDB (backend) featuring JWT-based authentication, role-based access control, and a modern UI.
 
@@ -52,7 +52,7 @@ frontend/
 ### 1. Clone the repository
 ```sh
 git clone <repo-url>
-cd library_management_service
+cd library_management_system
 ```
 
 ### 2. Backend Setup
