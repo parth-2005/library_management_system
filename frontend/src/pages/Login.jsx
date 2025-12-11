@@ -22,9 +22,7 @@ const Login = () => {
     try {
       setLoading(true);
       const payload = { email, password };
-      const data = userType === 'admin'
-        ? await authAPI.adminLogin(payload)
-        : await authAPI.userLogin(payload);
+      const data = userType === 'admin' ? await authAPI.adminLogin(payload) : await authAPI.userLogin(payload);
 
       const actor = data.admin || data.user;
       const role = actor?.role || userType;
@@ -41,7 +39,8 @@ const Login = () => {
         navigate('/user/dashboard');
       }
     } catch (error) {
-      toast.error(error.message || 'Login failed');
+      console.log(error)
+      toast.error('Login failed');
     } finally {
       setLoading(false);
     }

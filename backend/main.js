@@ -25,12 +25,14 @@ app.use(express.json()) //helps to get the data in json format
 
 
 //Routes
+// Public auth endpoints must be registered before protected /api/user routes
+app.use('/api', adminAuthRoute);   
+app.use('/api', userAuthRoute);
+
 app.use("/api/book", book_route);
 app.use("/api/user",user_route);
 app.use("/api/assignment", assignment_route);
-app.use('/api', adminAuthRoute);   
 app.use('/api', adminUserRoute);   
-app.use('/api', userAuthRoute);
 
 //Database Connection
 connectDB();

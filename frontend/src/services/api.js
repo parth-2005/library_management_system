@@ -1,9 +1,12 @@
 const API_BASE_URL ='http://localhost:5001/api';
-const getAuthHeaders = (isJson = true) => {
+const getAuthHeaders = (isJson = true, url = '') => {
   const token = localStorage.getItem('token');
   const headers = {};
   if (isJson) headers['Content-Type'] = 'application/json';
-  if (token) headers.Authorization = `Bearer ${token}`;
+  // Only add Authorization if token exists and not calling login/signup endpoints
+  const isAuthRoute =
+    url.includes('/login') || url.includes('/signup');
+  if (token && !isAuthRoute) headers.Authorization = `Bearer ${token}`;
   return headers;
 };
 
@@ -11,7 +14,7 @@ export const authAPI = {
   adminSignup: async (payload) => {
     const response = await fetch(`${API_BASE_URL}/admin/signup`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(true, `${API_BASE_URL}/admin/signup`),
       body: JSON.stringify(payload),
     });
     const data = await response.json();
@@ -23,7 +26,7 @@ export const authAPI = {
   adminLogin: async (payload) => {
     const response = await fetch(`${API_BASE_URL}/admin/login`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(true, `${API_BASE_URL}/admin/login`),
       body: JSON.stringify(payload),
     });
     const data = await response.json();
@@ -33,9 +36,11 @@ export const authAPI = {
     return data;
   },
   userLogin: async (payload) => {
+    // Remove any old token before login to avoid sending invalid Authorization header
+    localStorage.removeItem('token');
     const response = await fetch(`${API_BASE_URL}/user/login`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(true, `${API_BASE_URL}/user/login`),
       body: JSON.stringify(payload),
     });
     const data = await response.json();
@@ -50,7 +55,7 @@ export const authAPI = {
 export const bookAPI = {
   getAllBooks: async () => {
     const response = await fetch(`${API_BASE_URL}/book/getbooks`, {
-      headers: getAuthHeaders(false),
+      headers: getAuthHeaders(false, `${API_BASE_URL}/book/getbooks`),
     });
     const data = await response.json();
     return data.Book || [];
@@ -58,7 +63,7 @@ export const bookAPI = {
 
   getBookById: async (id) => {
     const response = await fetch(`${API_BASE_URL}/book/getbook/${id}`, {
-      headers: getAuthHeaders(false),
+      headers: getAuthHeaders(false, `${API_BASE_URL}/book/getbook/${id}`),
     });
     const data = await response.json();
     return data.Book;
@@ -67,7 +72,7 @@ export const bookAPI = {
   addBook: async (bookData) => {
     const response = await fetch(`${API_BASE_URL}/book/addbook`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(true, `${API_BASE_URL}/book/addbook`),
       body: JSON.stringify(bookData),
     });
     
@@ -83,7 +88,7 @@ export const bookAPI = {
   updateBook: async (id, bookData) => {
     const response = await fetch(`${API_BASE_URL}/book/updatebook/${id}`, {
       method: 'PUT',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(true, `${API_BASE_URL}/book/updatebook/${id}`),
       body: JSON.stringify(bookData),
     });
     
@@ -99,7 +104,7 @@ export const bookAPI = {
   deleteBook: async (id) => {
     const response = await fetch(`${API_BASE_URL}/book/deletebook/${id}`, {
       method: 'DELETE',
-      headers: getAuthHeaders(false),
+      headers: getAuthHeaders(false, `${API_BASE_URL}/book/deletebook/${id}`),
     });
     const data = await response.json();
     return data;
@@ -110,7 +115,7 @@ export const bookAPI = {
 export const userAPI = {
   getAllUsers: async () => {
     const response = await fetch(`${API_BASE_URL}/admin/users`, {
-      headers: getAuthHeaders(false),
+      headers: getAuthHeaders(false, `${API_BASE_URL}/admin/users`),
     });
     const data = await response.json();
     return data || [];
@@ -119,7 +124,7 @@ export const userAPI = {
   createUser: async (userData) => {
     const response = await fetch(`${API_BASE_URL}/admin/users`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(true, `${API_BASE_URL}/admin/users`),
       body: JSON.stringify(userData),
     });
     const data = await response.json();
@@ -135,7 +140,7 @@ export const assignmentAPI = {
   assignBook: async (assignmentData) => {
     const response = await fetch(`${API_BASE_URL}/assignment/assign`, {
       method: 'POST',
-      headers: getAuthHeaders(),
+      headers: getAuthHeaders(true, `${API_BASE_URL}/assignment/assign`),
       body: JSON.stringify(assignmentData),
     });
     const data = await response.json();
@@ -147,7 +152,7 @@ export const assignmentAPI = {
 
   getUserAssignments: async (userId) => {
     const response = await fetch(`${API_BASE_URL}/assignment/user/${userId}`, {
-      headers: getAuthHeaders(false),
+      headers: getAuthHeaders(false, `${API_BASE_URL}/assignment/user/${userId}`),
     });
     const data = await response.json();
     if (!response.ok) {
@@ -158,7 +163,7 @@ export const assignmentAPI = {
 
   getAllAssignments: async () => {
     const response = await fetch(`${API_BASE_URL}/assignment/all`, {
-      headers: getAuthHeaders(false),
+      headers: getAuthHeaders(false, `${API_BASE_URL}/assignment/all`),
     });
     const data = await response.json();
     if (!response.ok) {
@@ -170,7 +175,7 @@ export const assignmentAPI = {
   returnBook: async (assignmentId) => {
     const response = await fetch(`${API_BASE_URL}/assignment/return/${assignmentId}`, {
       method: 'POST',
-      headers: getAuthHeaders(false),
+      headers: getAuthHeaders(false, `${API_BASE_URL}/assignment/return/${assignmentId}`),
     });
     const data = await response.json();
     if (!response.ok) {
