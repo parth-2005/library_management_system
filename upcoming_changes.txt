@@ -1,0 +1,16 @@
+Also make a page where the people first visit our website they see all the books but then if they want or rent the book! then they have to create the account and login! more like online option to browse if the book is available or not! so if available then he can go to library and then rent it!
+
+Notifications (Email / SMS / Push)
+  Why: Remind users about due dates, reservations, fines, announcements.
+  Tech: Nodemailer / SendGrid (email), Twilio (SMS), Firebase (push).
+  Complexity: Medium
+
+
+Late Fees & Payments
+  Why: Monetization + enforce returns.
+  Tech: Integrate Stripe/PayPal for payments; track fines attached to user accounts.
+  API: GET /api/users/:id/fines, POST /api/payments
+  Complexity: Medium
+
+Add the image of the book while adding a new book!
+Also make the review section and liking disliking feature for the books where the user can see the books! and permit these only if the user is already logged in!
