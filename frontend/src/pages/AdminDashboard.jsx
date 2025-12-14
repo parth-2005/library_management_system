@@ -164,6 +164,12 @@ const AdminDashboard = () => {
               <h1 className="text-2xl font-bold text-slate-900">Admin Dashboard</h1>
             </div>
             <div className="flex items-center gap-4">
+              <button
+                onClick={() => navigate('/')}
+                className="px-4 py-2 bg-white/80 text-slate-700 rounded-lg hover:bg-white transition border border-white/30 backdrop-blur"
+              >
+                Home
+              </button>
               <span className="text-slate-700">Welcome, {admin?.adminName || admin?.email}</span>
               <button
                 onClick={handleLogout}

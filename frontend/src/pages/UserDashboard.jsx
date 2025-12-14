@@ -91,6 +91,12 @@ const UserDashboard = () => {
               <h1 className="text-2xl font-bold text-slate-900">User Dashboard</h1>
             </div>
             <div className="flex items-center gap-4">
+              <button
+                onClick={() => navigate('/')}
+                className="px-4 py-2 bg-white/80 text-slate-700 rounded-lg hover:bg-white transition border border-slate-200"
+              >
+                Home
+              </button>
               <span className="text-slate-700">Welcome, {user?.username || user?.email}</span>
               <button
                 onClick={handleLogout}

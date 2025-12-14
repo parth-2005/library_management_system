@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
+import Home from './pages/Home';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminSignup from './pages/AdminSignup';
@@ -34,8 +35,9 @@ function App() {
           }}
         />
         <Routes>
-          <Route path="/" element={<Login />} />
-          {/* Hidden/unguarded route for initial admin setup. Keep URL private. */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          Hidden/unguarded route for initial admin setup. Keep URL private.
           <Route path="/admin/setup" element={<AdminSignup />} />
           <Route path="/user/dashboard" element={<UserDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />

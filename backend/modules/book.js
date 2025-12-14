@@ -24,6 +24,10 @@ const bookSchema = new mongoose.Schema({
     book_quantity:{
         type:Number,
         required:true
+    },
+    book_cover:{
+        type: String,
+        required: true
     }
 });
 

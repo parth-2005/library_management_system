@@ -46,6 +46,10 @@ const Login = () => {
     }
   };
 
+  const handleGoToHome = () => {
+    navigate('/');
+  };
+
   return (
     <div
       className="min-h-screen flex items-center justify-center relative"
@@ -74,6 +78,15 @@ const Login = () => {
         <p className="text-center text-sm text-slate-500 mb-6">
           Borrow smarter. Manage seamlessly.
         </p>
+        <div className="text-center mb-4">
+          <button
+            type="button"
+            onClick={handleGoToHome}
+            className="text-sm text-sky-600 hover:text-sky-700 font-medium underline"
+          >
+            ← Back to Book Collection
+          </button>
+        </div>
         
         <form onSubmit={handleLogin} className="space-y-6">
           <div>

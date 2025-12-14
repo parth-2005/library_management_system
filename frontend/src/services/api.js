@@ -70,10 +70,31 @@ export const bookAPI = {
   },
 
   addBook: async (bookData) => {
+    const formData = new FormData();
+    
+    // Append all book fields
+    formData.append('book_title', bookData.book_title);
+    formData.append('book_author', bookData.book_author);
+    formData.append('book_language', bookData.book_language);
+    formData.append('book_price', bookData.book_price);
+    formData.append('book_quantity', bookData.book_quantity);
+    
+    // Append file if it exists
+    if (bookData.book_cover) {
+      formData.append('book_cover', bookData.book_cover);
+    }
+    
+    const token = localStorage.getItem('token');
+    const headers = {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    // Don't set Content-Type for FormData - browser will set it with boundary
+    
     const response = await fetch(`${API_BASE_URL}/book/addbook`, {
       method: 'POST',
-      headers: getAuthHeaders(true, `${API_BASE_URL}/book/addbook`),
-      body: JSON.stringify(bookData),
+      headers: headers,
+      body: formData,
     });
     
     if (!response.ok) {
@@ -86,10 +107,33 @@ export const bookAPI = {
   },
 
   updateBook: async (id, bookData) => {
+    const token = localStorage.getItem('token');
+    const headers = {};
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+    
+    let body;
+    // If there's a file, use FormData, otherwise use JSON
+    if (bookData.book_cover && bookData.book_cover instanceof File) {
+      const formData = new FormData();
+      formData.append('book_title', bookData.book_title);
+      formData.append('book_author', bookData.book_author);
+      formData.append('book_language', bookData.book_language);
+      formData.append('book_price', bookData.book_price);
+      formData.append('book_quantity', bookData.book_quantity);
+      formData.append('book_cover', bookData.book_cover);
+      body = formData;
+      // Don't set Content-Type for FormData
+    } else {
+      headers['Content-Type'] = 'application/json';
+      body = JSON.stringify(bookData);
+    }
+    
     const response = await fetch(`${API_BASE_URL}/book/updatebook/${id}`, {
       method: 'PUT',
-      headers: getAuthHeaders(true, `${API_BASE_URL}/book/updatebook/${id}`),
-      body: JSON.stringify(bookData),
+      headers: headers,
+      body: body,
     });
     
     if (!response.ok) {
