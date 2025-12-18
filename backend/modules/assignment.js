@@ -40,7 +40,7 @@ const assignmentSchema = new mongoose.Schema({
 
 // the upper schema will automatically give the JSON like this:
 // {
-//   "_id": "66a123...",
+//   "_id": "66a123...", //this will be the assignment_id 
 //   "issuedDate": "2025-02-02",
 //   "dueDate": "2025-02-12",
 //   "rent": 20,

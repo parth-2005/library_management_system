@@ -70,8 +70,11 @@ const UserDashboard = () => {
     );
   }
 
-  const totalRent = assignments.reduce((sum, assignment) => sum + (assignment.rent || 0), 0);
-  const totalBooks = assignments.length;
+  // Only calculate rent for active (non-returned) assignments
+  const totalRent = assignments
+    .filter(assignment => !assignment.returned)
+    .reduce((sum, assignment) => sum + (assignment.rent || 0), 0);
+  const activeBooks = assignments.filter(assignment =>!assignment.returned).length;
 
   return (
     <div
@@ -113,11 +116,11 @@ const UserDashboard = () => {
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-white/90 backdrop-blur p-6 rounded-2xl shadow-lg border border-slate-200">
-            <h3 className="text-sm font-medium text-gray-500 mb-2">Total Books</h3>
-            <p className="text-3xl font-bold text-blue-600">{totalBooks}</p>
+            <h3 className="text-sm font-medium text-gray-500 mb-2">Books left to return</h3>
+            <p className="text-3xl font-bold text-blue-600">{activeBooks}</p>
           </div>
           <div className="bg-white/90 backdrop-blur p-6 rounded-2xl shadow-lg border border-slate-200">
-            <h3 className="text-sm font-medium text-gray-500 mb-2">Total Rent</h3>
+            <h3 className="text-sm font-medium text-gray-500 mb-2">Total Rent (Active)</h3>
             <p className="text-3xl font-bold text-green-600">₹{totalRent}</p>
           </div>
           <div className="bg-white/90 backdrop-blur p-6 rounded-2xl shadow-lg border border-slate-200">
@@ -196,7 +199,11 @@ const UserDashboard = () => {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                          ₹{assignment.rent || 0}
+                          {assignment.returned ? (
+                            <span className="text-gray-400">-</span>
+                          ) : (
+                            `₹${assignment.rent || 0}`
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span

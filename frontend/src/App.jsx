@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import UserDashboard from './pages/UserDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminSignup from './pages/AdminSignup';
+import AdminAssignmentsPage from './pages/AdminAssignmentsPage';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/admin/setup" element={<AdminSignup />} />
           <Route path="/user/dashboard" element={<UserDashboard />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/assignments" element={<AdminAssignmentsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

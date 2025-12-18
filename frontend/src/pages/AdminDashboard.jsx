@@ -192,11 +192,17 @@ const AdminDashboard = () => {
             >
               Add New Book
             </button>
-            <button
+            {/* <button
               onClick={() => setShowAssignments(!showAssignments)}
               className="px-5 py-3 bg-slate-100 text-slate-900 rounded-xl border border-white/80 hover:bg-white transition font-semibold shadow-sm"
             >
               {showAssignments ? 'Hide' : 'View'} All Assignments
+            </button> */}
+            <button
+              onClick={() => navigate('/admin/assignments')}
+              className="px-5 py-3 bg-blue-600 text-white rounded-xl border border-blue-700 hover:bg-blue-700 transition font-semibold shadow-sm"
+            >
+            Manage Assignments
             </button>
             <button
               onClick={() => setShowUserForm(true)}

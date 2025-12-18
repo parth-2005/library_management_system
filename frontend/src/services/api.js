@@ -227,5 +227,17 @@ export const assignmentAPI = {
     }
     return data;
   },
+
+  sendReminderEmail: async (assignmentId) => {
+    const response = await fetch(`${API_BASE_URL}/assignment/send-reminder/${assignmentId}`, {
+      method: 'POST',
+      headers: getAuthHeaders(false, `${API_BASE_URL}/assignment/send-reminder/${assignmentId}`),
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || data.error || 'Failed to send reminder email');
+    }
+    return data;
+  },
 };
 
