@@ -28,7 +28,11 @@ const bookSchema = new mongoose.Schema({
     book_cover:{
         type: String,
         required: true
-    }
+    },
+    book_reviews: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Review'
+}]
 });
 
 const Book_model = mongoose.model("Book", bookSchema);

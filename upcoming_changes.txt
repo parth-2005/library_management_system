@@ -1,14 +1,1 @@
-Notifications (Email / SMS / Push)
-  Why: Remind users about due dates, reservations, fines, announcements.
-  Tech: Nodemailer / SendGrid (email), Twilio (SMS), Firebase (push).
-  Complexity: Medium
-
-
-Late Fees & Payments
-  Why: Monetization + enforce returns.
-  Tech: Integrate Stripe/PayPal for payments; track fines attached to user accounts.
-  API: GET /api/users/:id/fines, POST /api/payments
-  Complexity: Medium
-
-Add the image of the book while adding a new book!
 Also make the review section and liking disliking feature for the books where the user can see the books! and permit these only if the user is already logged in!

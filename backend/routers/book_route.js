@@ -8,6 +8,7 @@ import{
     DeleteBookById, 
     DeleteBooks  
 } from '../controllers/book_controller.js';
+import { AddReview, DeleteReview } from '../controllers/review_controller.js';
 import { authRequired, requireAdmin } from '../middleware/auth_middleware.js';
 
 const router = express.Router();
@@ -18,6 +19,8 @@ router.get('/getbooks', GetBooks);
 // Authenticated routes
 router.use(authRequired);
 router.get('/getbook/:id', GetBookById);
+router.post('/:bookId/reviews', AddReview);
+router.delete('/reviews/:reviewId', DeleteReview);
 
 // Admin only mutations
 router.post('/addbook', requireAdmin,upload.single("book_cover"),AddBook);
