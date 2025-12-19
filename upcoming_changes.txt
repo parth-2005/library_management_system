@@ -1,1 +1,0 @@
-Also make the review section and liking disliking feature for the books where the user can see the books! and permit these only if the user is already logged in!
