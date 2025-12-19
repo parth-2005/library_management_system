@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.MODE === 'development' ? 'http://localhost:5001/api' : "/api/auth";
+const API_BASE_URL = import.meta.env.MODE === 'development' ? 'http://localhost:5001/api' : "/api";
 const getAuthHeaders = (isJson = true, url = '') => {
   const token = localStorage.getItem('token');
   const headers = {};
