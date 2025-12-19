@@ -164,7 +164,7 @@ export const userAPI = {
     const data = await response.json();
     return data || [];
   },
-
+  
   createUser: async (userData) => {
     const response = await fetch(`${API_BASE_URL}/admin/users`, {
       method: 'POST',
@@ -193,7 +193,7 @@ export const assignmentAPI = {
     }
     return data;
   },
-
+  
   getUserAssignments: async (userId) => {
     const response = await fetch(`${API_BASE_URL}/assignment/user/${userId}`, {
       headers: getAuthHeaders(false, `${API_BASE_URL}/assignment/user/${userId}`),
@@ -204,7 +204,7 @@ export const assignmentAPI = {
     }
     return data.assignments || [];
   },
-
+  
   getAllAssignments: async () => {
     const response = await fetch(`${API_BASE_URL}/assignment/all`, {
       headers: getAuthHeaders(false, `${API_BASE_URL}/assignment/all`),
@@ -215,7 +215,7 @@ export const assignmentAPI = {
     }
     return data.assignments || [];
   },
-
+  
   returnBook: async (assignmentId) => {
     const response = await fetch(`${API_BASE_URL}/assignment/return/${assignmentId}`, {
       method: 'POST',
@@ -227,7 +227,7 @@ export const assignmentAPI = {
     }
     return data;
   },
-
+  
   sendReminderEmail: async (assignmentId) => {
     const response = await fetch(`${API_BASE_URL}/assignment/send-reminder/${assignmentId}`, {
       method: 'POST',
@@ -239,5 +239,8 @@ export const assignmentAPI = {
     }
     return data;
   },
-};
-
+}
+  
+  
+  
+  

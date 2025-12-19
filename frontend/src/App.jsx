@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import UserDashboard from './pages/UserDashboard';
+import UserBooks from './pages/UserBooks';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminSignup from './pages/AdminSignup';
 import AdminAssignmentsPage from './pages/AdminAssignmentsPage';
@@ -41,6 +42,7 @@ function App() {
           Hidden/unguarded route for initial admin setup. Keep URL private.
           <Route path="/admin/setup" element={<AdminSignup />} />
           <Route path="/user/dashboard" element={<UserDashboard />} />
+          <Route path="/user/books" element={<UserBooks />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/assignments" element={<AdminAssignmentsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />

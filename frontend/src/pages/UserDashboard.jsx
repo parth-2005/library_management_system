@@ -6,6 +6,7 @@ import { assignmentAPI } from '../services/api';
 const UserDashboard = () => {
   const [assignments, setAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showHistory, setShowHistory] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const storedUser = localStorage.getItem('user');
@@ -75,6 +76,9 @@ const UserDashboard = () => {
     .filter(assignment => !assignment.returned)
     .reduce((sum, assignment) => sum + (assignment.rent || 0), 0);
   const activeBooks = assignments.filter(assignment =>!assignment.returned).length;
+  const visibleAssignments = showHistory
+    ? assignments.filter(a => a.returned)
+    : assignments;
 
   return (
     <div
@@ -112,9 +116,19 @@ const UserDashboard = () => {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+          <div className="flex flex-wrap gap-3 items-center justify-between">
+            <div className="flex gap-3">
+              <button
+                onClick={() => navigate('/user/books')}
+                className="px-4 py-2 bg-white text-slate-800 border border-slate-200 rounded-lg text-sm font-semibold hover:bg-slate-50 transition"
+              >
+                Browse & Review Books
+              </button>
+            </div>
+          </div>
         {/* Summary Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white/90 backdrop-blur p-6 rounded-2xl shadow-lg border border-slate-200">
             <h3 className="text-sm font-medium text-gray-500 mb-2">Books left to return</h3>
             <p className="text-3xl font-bold text-blue-600">{activeBooks}</p>
@@ -133,13 +147,24 @@ const UserDashboard = () => {
 
         {/* Books List */}
         <div className="bg-white/90 backdrop-blur rounded-2xl shadow-xl overflow-hidden border border-slate-200">
-          <div className="px-6 py-4 border-b border-slate-200">
-            <h2 className="text-xl font-semibold text-gray-800">My Books</h2>
+          <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-gray-800">
+              {showHistory ? 'Borrowing History' : 'My Current Books'}
+            </h2>
+            <button
+              type="button"
+              onClick={() => setShowHistory((prev) => !prev)}
+              className="text-sm px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-medium"
+            >
+              {showHistory ? 'Show Current' : 'View History'}
+            </button>
           </div>
           
-          {assignments.length === 0 ? (
+          {visibleAssignments.length === 0 ? (
             <div className="p-12 text-center">
-              <p className="text-gray-500 text-lg">No books assigned yet</p>
+              <p className="text-gray-500 text-lg">
+                {showHistory ? 'No past borrowed books yet' : 'No books assigned yet'}
+              </p>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -167,7 +192,7 @@ const UserDashboard = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {assignments.map((assignment) => {
+                  {visibleAssignments.map((assignment) => {
                     const daysRemaining = calculateDaysRemaining(
                       assignment.issuedDate,
                       assignment.daysAllowed

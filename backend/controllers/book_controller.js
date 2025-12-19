@@ -33,7 +33,15 @@ export const GetBookById = async(req,res) => {
         if(!mongoose.Types.ObjectId.isValid(id)){
             return res.status(400).json({error:"Book_Not_Found"})
         }
+        // Populate reviews with user info so frontend can show who wrote what
         const Book = await Book_model.findById({_id:id})
+        .populate({
+            path: 'book_reviews',
+            populate: {
+                path: 'user',
+                select: 'username email'
+            }
+        });
         if(!Book){
             return res.status(400).json({error:"Unable to get the Book"})
         }
