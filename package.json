@@ -1,0 +1,23 @@
+{
+  "name": "library_management_system",
+  "version": "1.0.0",
+  "description": "A full-stack MERN (MongoDB, Express, React, Node.js) project for managing a library, featuring robust authentication, book management, assignments, reviews, and email notifications.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon backend/main.js",
+    "start": "NODE_ENV=production node backend/main.js ",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AayushParekh-1/library_management_system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/AayushParekh-1/library_management_system/issues"
+  },
+  "homepage": "https://github.com/AayushParekh-1/library_management_system#readme"
+}

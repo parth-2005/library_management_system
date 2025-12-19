@@ -9,9 +9,12 @@ import adminAuthRoute from './routers/admin_auth_route.js';
 import adminUserRoute from './routers/admin_user_route.js';
 import userAuthRoute from './routers/user_auth_route.js';
 
+import path from 'path';
+
+
 
 const app = express();
-
+const __dirname = path.resolve();
 
 //Middleware
 app.use(
@@ -34,6 +37,17 @@ app.use("/api/user",user_route);
 app.use("/api/assignment", assignment_route);
 app.use('/api', adminUserRoute);   
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "frontend/dist")));
+
+  app.use((req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "frontend/dist/index.html")
+    );
+  });
+}
+
+
 //Database Connection
 connectDB();
 
@@ -41,5 +55,5 @@ const PORT = process.env.PORT || 5002;
 
 app.listen(PORT, () => {
     console.log(`app is live on port ${PORT}`);
-    console.log(`http://localhost:${PORT}/api/`);
+    console.log(`http://localhost:${PORT}/`);
 });
